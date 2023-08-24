@@ -167,7 +167,8 @@
 		font-size: 		1rem;
 		font-family: 	var(--font-all-capital);
 		text-transform: uppercase;
-	}
+        letter-spacing: 0.1em;
+    }
 
 	footer a {
 		font-weight: bold;

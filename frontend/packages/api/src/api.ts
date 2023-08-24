@@ -1,16 +1,17 @@
 import type { HandlerFn, HandlerFnOnOpen, Player, PlayerType } from "./state-store";
 
 enum ActionTypes {
-    StartVoting    = "StartVoting",
-    Reveal         = "Reveal",
-    Reset          = "Reset",
-    Choose         = "Choose",
-    SetPlayerType  = "SetPlayerType",
-    SetCards       = "SetCards",
-    SwitchCardBack = "SwitchCardBack",
-    SetAutoReveal  = "SetAutoReveal",
-    SetAdmin       = "SetAdmin",
-    ReVote         = "ReVote",
+    StartVoting         = "StartVoting",
+    Reveal              = "Reveal",
+    Reset               = "Reset",
+    Choose              = "Choose",
+    SetPlayerType       = "SetPlayerType",
+    SetCards            = "SetCards",
+    SwitchCardBack      = "SwitchCardBack",
+    SetAutoReveal       = "SetAutoReveal",
+    SetAutoRevealTimer  = "SetAutoRevealTimer",
+    SetAdmin            = "SetAdmin",
+    ReVote              = "ReVote",
 }
 
 export interface Message<T> {
@@ -90,6 +91,14 @@ export class API {
         const msg = {
             type: ActionTypes.SetAutoReveal,
             payload: autoReveal,
+        }
+        this.send(msg)
+    }
+
+    public setAutoRevealTimer(autoRevealTimer: number) {
+        const msg = {
+            type: ActionTypes.SetAutoRevealTimer,
+            payload: autoRevealTimer,
         }
         this.send(msg)
     }

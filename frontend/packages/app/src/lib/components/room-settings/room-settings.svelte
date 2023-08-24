@@ -27,6 +27,16 @@
         api.setAutoReveal(autoReveal)
     }
 
+    //
+    // Auto Reveal Timer
+    //
+    export let autoRevealTimer: number = 0
+    function onAutoRevealTimerChange(event: Event){
+        const autoRevealTimerEl = event.target as HTMLInputElement
+        const autoRevealTimer = Number(autoRevealTimerEl.value) as number
+        api.setAutoRevealTimer(autoRevealTimer)
+    }
+
     // 
     // Give Admin To
     // 
@@ -98,6 +108,14 @@
         value={autoReveal}
         on:activate={onAutoRevealChange}
     />
+
+    {#if autoReveal}
+        <label>
+            <span class="time-box-label">Time Box:</span>
+            <input type="number" on:input={onAutoRevealTimerChange} 
+                value={autoRevealTimer} />
+        </label>
+    {/if}
 
     <label>
         <span class="give-admin-label">Give admin to</span>
@@ -171,6 +189,12 @@
     }
 
     .give-admin-label{
+        letter-spacing: 0.1em;
+        font-family:    var(--font-all-capital);
+        text-transform: uppercase;
+    }
+
+    .time-box-label{
         letter-spacing: 0.1em;
         font-family:    var(--font-all-capital);
         text-transform: uppercase;

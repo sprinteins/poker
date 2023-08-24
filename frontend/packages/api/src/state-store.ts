@@ -14,13 +14,13 @@ export type Set = {
 }
 
 export type State = {
-    player?:    Player
-    players?:   Player[]
-    status?:    Status
-    cards:      Cards
-    sets:       Set[]
-    autoReveal: boolean
-
+    player?:            Player
+    players?:           Player[]
+    status?:            Status
+    cards:              Cards
+    sets:               Set[]
+    autoReveal:         boolean
+    autoRevealTimeout:  number
 }
 
 export interface Player {
@@ -38,11 +38,12 @@ export enum PlayerType {
 }
 
 const initalState: State = {
-    players:    [],
-    status:     Status.Start,
-    cards:      [],
-    sets:       [],
-    autoReveal: false,
+    players:           [],
+    status:            Status.Start,
+    cards:             [],
+    sets:              [],
+    autoReveal:        false,
+    autoRevealTimeout: 0,
 }
 
 const state = writable(initalState)

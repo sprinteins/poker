@@ -3,29 +3,32 @@ package store
 import (
 	"encoding/json"
 	"sync"
+	"time"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/sprinteins/poker/src/x/types"
 )
 
 type Room struct {
-	id         types.ID
-	players    []*Player
-	mtx        sync.Mutex
-	status     Status
-	cards      Cards
-	autoReveal bool
+	id              types.ID
+	players         []*Player
+	mtx             sync.Mutex
+	status          Status
+	cards           Cards
+	autoReveal      bool
+	autoRevealTimer int
 }
 
 var defaultCards = cardSets[0]
 
 func NewRoom(id types.ID) Room {
 	return Room{
-		id:         id,
-		players:    make([]*Player, 0),
-		status:     StatusStart,
-		cards:      defaultCards.Cards,
-		autoReveal: false,
+		id:              id,
+		players:         make([]*Player, 0),
+		status:          StatusStart,
+		cards:           defaultCards.Cards,
+		autoReveal:      false,
+		autoRevealTimer: 0,
 	}
 }
 
@@ -79,12 +82,13 @@ func (r *Room) RemovePlayer(p Player) {
 }
 
 type State struct {
-	Player     *Player   `json:"player"`
-	Players    []*Player `json:"players"`
-	Status     Status    `json:"status"`
-	Cards      Cards     `json:"cards"`
-	Sets       []Set     `json:"sets"`
-	AutoReveal bool      `json:"autoReveal"`
+	Player          *Player   `json:"player"`
+	Players         []*Player `json:"players"`
+	Status          Status    `json:"status"`
+	Cards           Cards     `json:"cards"`
+	Sets            []Set     `json:"sets"`
+	AutoReveal      bool      `json:"autoReveal"`
+	AutoRevealTimer int       `json:"autoRevealTimer"`
 }
 
 func (r *Room) EmitState() {
@@ -96,12 +100,13 @@ func (r *Room) EmitState() {
 	for _, player := range r.players {
 
 		state := State{
-			Player:     player,
-			Players:    r.players,
-			Status:     r.status,
-			Cards:      r.cards,
-			Sets:       cardSets,
-			AutoReveal: r.autoReveal,
+			Player:          player,
+			Players:         r.players,
+			Status:          r.status,
+			Cards:           r.cards,
+			Sets:            cardSets,
+			AutoReveal:      r.autoReveal,
+			AutoRevealTimer: r.autoRevealTimer,
 		}
 		payload, err := json.Marshal(state)
 		if err != nil {
@@ -182,6 +187,13 @@ func (r *Room) AutoRevealIfCan() {
 	}
 }
 
+func (r *Room) AutoRevealIfTimeIsUp() {
+	if r.autoRevealTimer > 0 {
+		time.Sleep(time.Duration(r.autoRevealTimer) * time.Second)
+		r.Reveal()
+	}
+}
+
 func (r *Room) HasEverybodyChosen() bool {
 	for _, player := range r.players {
 		if player.Type == PlayerTypePlayer && player.ChosenCard == "" {
@@ -248,6 +260,17 @@ func (r *Room) SetAutoReveal(autoReveal bool) {
 		"roomID":     r.id,
 	}).Info("set auto reveal")
 	r.autoReveal = autoReveal
+	r.EmitState()
+}
+
+func (r *Room) SetAutoRevealTimer(autoRevealTimer int) {
+	r.mtx.Lock()
+	defer r.mtx.Unlock()
+	log.WithFields(log.Fields{
+		"autoRevealTimer": autoRevealTimer,
+		"roomID":          r.id,
+	}).Info("set to auto reveal after the timer is up")
+	r.autoRevealTimer = autoRevealTimer
 	r.EmitState()
 }
 

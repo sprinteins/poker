@@ -6,14 +6,15 @@ type Action struct {
 }
 
 const (
-	TypeStartVoting    = "StartVoting"
-	TypeReveal         = "Reveal"
-	TypeReset          = "Reset"
-	TypeChoose         = "Choose"
-	TypeSetPlayerType  = "SetPlayerType"
-	TypeSwitchCardBack = "SwitchCardBack"
-	TypeSetCards       = "SetCards"
-	TypeSetAutoReveal  = "SetAutoReveal"
-	TypeSetAdmin       = "SetAdmin"
-	TypeReVote         = "ReVote"
+	TypeStartVoting        = "StartVoting"
+	TypeReveal             = "Reveal"
+	TypeReset              = "Reset"
+	TypeChoose             = "Choose"
+	TypeSetPlayerType      = "SetPlayerType"
+	TypeSwitchCardBack     = "SwitchCardBack"
+	TypeSetCards           = "SetCards"
+	TypeSetAutoReveal      = "SetAutoReveal"
+	TypeSetAutoRevealTimer = "SetAutoRevealTimer"
+	TypeSetAdmin           = "SetAdmin"
+	TypeReVote             = "ReVote"
 )
