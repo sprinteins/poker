@@ -23,4 +23,8 @@ var cardSets = []Set{
 		Label: "yes/no",
 		Cards: Cards{"yes", "no"},
 	},
+	{
+		Label: "Hours",
+		Cards: Cards{"1h", "2h", "4h", "8h", "12h", "16h", "20h", "24h", "28h", "32h", "36h", "40h", "44h", "48h", "52h", "56h", "∞"},
+	},
 }
