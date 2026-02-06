@@ -109,7 +109,7 @@
     }
 
     .content {
-        font-size:      5rem;
+        font-size:      clamp(1.5rem, 4vw, 3.5rem);
         font-weight:    bold;
         position:       relative;
         z-index:        1;
@@ -118,6 +118,10 @@
         display:        grid;
         place-items:    center;
         text-transform: uppercase;
+        text-align:     center;
+        padding:        0 0.75rem;
+        line-height:    1;
+        overflow-wrap:  anywhere;
         
     }
 

@@ -106,15 +106,20 @@
     }
 
     .content {
-        font-size:   4rem;
+        font-size:   clamp(1.5rem, 4vw, 3.25rem);
         font-family: "Helvetica Neue";
         font-weight: bold;
         position:    relative;
         z-index:     1;
+        max-width:   100%;
+        padding:     0 0.5rem;
+        line-height: 1;
+        text-align:  center;
         /* transition:  transform 0.1s ease; */
         transition:  text-shadow;
         /* text-shadow: 0px 0px 8px #FFFFFF; */
         text-transform: uppercase;
+        overflow-wrap: anywhere;
     }
 
     .card::before {
