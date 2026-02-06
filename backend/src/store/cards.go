@@ -23,4 +23,8 @@ var cardSets = []Set{
 		Label: "yes/no",
 		Cards: Cards{"yes", "no"},
 	},
+	{
+		Label: "Done",
+		Cards: Cards{"Done"},
+	},
 }
