@@ -12,7 +12,7 @@ build: install ## Create production build
 
 publish: build ## Publish the frontend
 	zip -r build.zip ./build/*
-	scp build.zip poker:~/opt/poker
+	scp build.zip poker:/opt/poker
 
 install: ## Install dependencies
 	@pnpm install
